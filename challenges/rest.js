@@ -1,6 +1,3 @@
-// const fetch = require('node-fetch');
-// const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-
 /**
  * Implement the loadPosts() function that returns a Promise with posts
  * loaded from https://jsonplaceholder.typicode.com/posts and alphabetically sorted by title
@@ -28,10 +25,7 @@ const API_URL = 'https://jsonplaceholder.typicode.com/posts';
 async function loadPosts() {
   try {
     const posts = await axios.get(API_URL);
-    const sortedPosts = posts.data.sort((a, b) =>
-      a.title.localeCompare(b.title)
-    );
-    return sortedPosts;
+    return posts.data.sort((a, b) => a.title.localeCompare(b.title));
   } catch (err) {
     throw new Error('Failed to fetch or sort posts.');
   }
