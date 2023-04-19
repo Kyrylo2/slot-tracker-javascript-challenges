@@ -65,6 +65,12 @@ const reel3 = [
   'banana',
   'lemon',
 ];
+/**
+
+Calculates the total points earned for a given row of fruits in a slot machine game.
+@param {Array} row - An array of strings representing the fruits in a row.
+@returns {number} - The total points earned for the row, or 0 if the row is empty.
+*/
 function calculateRowPoints(row) {
   let totalPoints = 0;
   let lemons = 0,
@@ -72,11 +78,11 @@ function calculateRowPoints(row) {
     bananas = 0,
     cherries = 0;
 
-  row.forEach((el) => {
-    if (el === 'lemon') lemons += 1;
-    if (el === 'apple') apples += 1;
-    if (el === 'banana') bananas += 1;
-    if (el === 'cherry') cherries += 1;
+  row.forEach((fruit) => {
+    if (fruit === 'lemon') lemons += 1;
+    if (fruit === 'apple') apples += 1;
+    if (fruit === 'banana') bananas += 1;
+    if (fruit === 'cherry') cherries += 1;
   });
 
   if (cherries === 3) totalPoints += 50;
@@ -90,6 +96,14 @@ function calculateRowPoints(row) {
   return totalPoints;
 }
 
+/**
+
+Calculates the total points earned for a slot machine game round.
+@param {number} position1 - The starting position of the first reel.
+@param {number} position2 - The starting position of the second reel.
+@param {number} position3 - The starting position of the third reel.
+@returns {number} - The total points earned for the round.
+*/
 function calculateResult(position1, position2, position3) {
   const firstRow = [reel1[position1], reel2[position2], reel3[position3]];
   const secondRow = [
@@ -102,7 +116,6 @@ function calculateResult(position1, position2, position3) {
     reel2[position2 + 2] ?? reel2[position2 + 2 - reel2.length],
     reel3[position3 + 2] ?? reel3[position3 + 2 - reel3.length],
   ];
-
   const firstRowPoints = calculateRowPoints(firstRow);
   const secondRowPoints = calculateRowPoints(secondRow);
   const thirdRowPoints = calculateRowPoints(thirdRow);
