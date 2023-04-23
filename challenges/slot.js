@@ -65,6 +65,7 @@ const reel3 = [
   'banana',
   'lemon',
 ];
+
 /**
 
 Calculates the total points earned for a given row of fruits in a slot machine game.
@@ -72,27 +73,42 @@ Calculates the total points earned for a given row of fruits in a slot machine g
 @returns {number} - The total points earned for the row, or 0 if the row is empty.
 */
 function calculateRowPoints(row) {
-  const fruitCounts = {
-    lemon: 0,
-    apple: 0,
-    banana: 0,
-    cherry: 0,
-  };
   let totalPoints = 0;
 
-  row.forEach((fruit) => {
-    if (fruitCounts.hasOwnProperty(fruit)) {
-      fruitCounts[fruit]++;
-    }
-  });
+  // ---- vol 1 ----
+  // const fruitCounts = {};
 
-  if (fruitCounts.cherry === 3) totalPoints += 50;
-  if (fruitCounts.cherry === 2) totalPoints += 40;
-  if (fruitCounts.apple === 3) totalPoints += 20;
-  if (fruitCounts.apple === 2) totalPoints += 10;
-  if (fruitCounts.banana === 3) totalPoints += 15;
-  if (fruitCounts.banana === 2) totalPoints += 5;
-  if (fruitCounts.lemon === 3) totalPoints += 3;
+  // row.forEach((fruit) => {
+  //   fruitCounts[fruit] = fruitCounts[fruit] ? fruitCounts[fruit] + 1 : 1;
+  // });
+
+  // if (fruitCounts.cherry === 3) totalPoints += 50;
+  // if (fruitCounts.cherry === 2) totalPoints += 40;
+  // if (fruitCounts.apple === 3) totalPoints += 20;
+  // if (fruitCounts.apple === 2) totalPoints += 10;
+  // if (fruitCounts.banana === 3) totalPoints += 15;
+  // if (fruitCounts.banana === 2) totalPoints += 5;
+  // if (fruitCounts.lemon === 3) totalPoints += 3;
+
+  // ---- vol 2 ----
+  const fruitCounts = row.reduce((counts, fruit) => {
+    return { ...counts, [fruit]: (counts[fruit] || 0) + 1 };
+  }, {});
+
+  const FRUIT_POINTS = {
+    cherry: { 2: 40, 3: 50 },
+    apple: { 2: 10, 3: 20 },
+    banana: { 2: 5, 3: 15 },
+    lemon: { 3: 3 },
+  };
+
+  for (const [fruit, count] of Object.entries(fruitCounts)) {
+    const fruitPoints = FRUIT_POINTS[fruit];
+
+    if (fruitPoints) {
+      totalPoints += fruitPoints[count] || 0;
+    }
+  }
 
   return totalPoints;
 }

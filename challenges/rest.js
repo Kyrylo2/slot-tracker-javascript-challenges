@@ -25,7 +25,10 @@ const API_URL = 'https://jsonplaceholder.typicode.com/posts';
 async function loadPosts() {
   try {
     const posts = await axios.get(API_URL);
-    return posts.data.sort((a, b) => a.title.localeCompare(b.title));
+    const sortedPosts = posts.data.sort((a, b) =>
+      a.title.localeCompare(b.title)
+    );
+    return sortedPosts;
   } catch (err) {
     throw new Error('Failed to fetch or sort posts.');
   }
